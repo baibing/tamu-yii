@@ -1,0 +1,41 @@
+fieldset {
+  padding: 1em;
+  margin-top: 1em;
+  width: 900px;
+}
+
+.row {
+  margin-top: 1em;
+}
+
+
+#tour-schedule {
+  margin: auto;
+}
+
+.eventOptionList {
+  margin-left: 1em;
+}
+
+.scheduleRadioGroup {
+  margin-bottom: 1em;
+  width: 31%;
+  float: left;
+  padding: 5px;
+}
+
+input#Schedule1, #Schedule2, #S1 {
+  margin-left: 0em;
+}
+
+
+
+#group-information select, #group-information input[type='number'], #group-information input[type='text'] {
+ display: block;
+}
+
+#GroupReservation_lunch_payment {
+  display: block;
+}
+
+#contact-information input {display: block;}
