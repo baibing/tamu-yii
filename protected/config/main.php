@@ -18,6 +18,7 @@ return array(
 		'application.components.*',
 		'application.modules.rights.*',
 		'application.modules.rights.components.*',
+		'ext.yii-mail.YiiMailMessage',
 	),
 
 	'modules'=>array(
@@ -94,6 +95,18 @@ return array(
 				*/
 			),
 		),
+		'mail' => array(
+            'class' => 'ext.yii-mail.YiiMail',
+            'transportType'=>'smtp',
+            'transportOptions'=>array(
+                'host'=>'smtp.gmail.com',
+                'username'=>'zhengbernard@gmail.com',
+                'password'=>'',
+                'port'=>'465',
+                'encryption'=>'ssl',
+            ),
+            'viewPath' => 'application.views.mail',             
+        ),
 	),
 
 	// application-level parameters that can be accessed
@@ -104,4 +117,5 @@ return array(
 	),
 	
 	//'theme' => 'classic',
+	
 );

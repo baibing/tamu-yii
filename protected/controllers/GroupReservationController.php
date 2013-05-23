@@ -73,16 +73,24 @@ class GroupReservationController extends Controller
 			$model->attributes=$_POST['GroupReservation'];
 		}
 		
-		$daysArray = array();
 		$daysList = BlackoutSchedule::model()->findAll("date>=:date AND status>=2", array(':date'=>date('Y-m-d')));
 		foreach($daysList as $day) {
 			$daysArray[] = $day->date;
 		}
 		$days = '"' . implode('", "', $daysArray) . '"';
+		$daysList = BlackoutSchedule::model()->findAll("date>=:date AND status=1", array(':date'=>date('Y-m-d')));
+		foreach($daysList as $day) {
+			$halfDaysArray[] = date("m/d/Y", strtotime($day->date));
+			$scheArray[] = $day->schedule_id;
+		}
+		$halfDays = '"' . implode('", "', $halfDaysArray) . '"';
+		$blkSches = '"' . implode('", "', $scheArray) . '"';
 
 		$this->render('create',array(
 			'model'=>$model,
 			'days'=>$days,
+			'halfDays'=>$halfDays,
+			'blkSches'=>$blkSches,
 		));
 	}
 
@@ -142,6 +150,18 @@ class GroupReservationController extends Controller
 			// var_dump($groupModel->getErrors());
 			
 			if($groupModel->save()) {
+				try {
+					//send confirmation email
+					$message = new YiiMailMessage;
+					$message->view = "confirm";
+			        $params = array('schedule'=>$groupModel);
+					$message->subject = 'Group Visit to Texas A&M University';
+					$message->setBody($params, 'text/html');
+					$message->addTo('zhengbernard@gmail.com');
+	        		$message->from = 'no-reply@tamu.edu';
+					Yii::app()->mail->send($message);
+				} catch(Exception $e) {}
+				
 				$this->render('thankyou',array(
 					'model'=>$groupModel,
 				));
@@ -252,20 +272,13 @@ class GroupReservationController extends Controller
 	}
 	
 	/**
-	 * Find the name of the given type id
-	 */
-	public function getType($type_id) {
-		$type = GroupType::model() -> findByPk($type_id);
-		return $type->name;
-	}
-	
-	/**
 	 * Ajax function to dynamicly check the blackout schedules
 	 */
 	public function actionCheckBlkSch() {
-		$date = $_POST['GroupReservation']['date'];
+		print_r($_POST);
+		$date = $_POST['selDate'];
 		$model = BlackoutSchedule::model()->findByAttributes(array('date'=>$date));
-		
+		print_r($model);
 		echo $model->date;
 	}
 

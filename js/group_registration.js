@@ -8,15 +8,6 @@ $().ready(function(){
     });
 });
 
-$(function(){
-	$("#scheduleRadioGroup").click(function(){
-		alert("schedule_id");
-		var schedule_id = $('input:radio[name=ModelName[schedule_id]]:checked').val();
-		
-		alert(schedule_id);
-	});
-});
-
 $(function() {
         $("#formBackwardButton").click(function(event){
                 event.preventDefault();
@@ -26,4 +17,11 @@ $(function() {
                 event.preventDefault();
                 $('#formForward').submit();
         });
+});
+
+$(function() {
+	$(".scheduleRadio").click(function(){
+		//alert("schedule_ida");
+		//$('#schedule1Div :input').attr('disabled', true);
+	});
 });

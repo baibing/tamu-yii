@@ -18,24 +18,15 @@ function blackoutDays(date) {
 		return [true];
 	}
 }
+var halfDays = [".$halfDays."];
+var blkSches = [".$blkSches."];
 function checkBlkSchedule(date) {
-	$('#schedule1 :input').removeAttr('disabled');
-	$('#schedule2 :input').removeAttr('disabled');
-	$('#touronly1 :input').removeAttr('disabled');
-	$('#touronly2 :input').removeAttr('disabled');
-	$('#touronly3 :input').removeAttr('disabled');
-	$('#touronly4 :input').removeAttr('disabled');
-	$('#touronly5 :input').removeAttr('disabled');
+	$('#scheduleForm :input').removeAttr('disabled');
 	var index = $.inArray(date, halfDays);
 	if(index != -1) {
 		var schedule_id = blkSches[index];
-		if (schedule_id <= 3) {
-			$('#schedule1 :input').attr('disabled', true);
-		} else if (schedule_id <= 6) {
-			$('#schedule2 :input').attr('disabled', true);
-		} else {
-			$('#touronly' + (schedule_id - 6) + ' :input').attr('disabled', true);
-		}
+		var scheduleDiv = \"#schedule\" + schedule_id + \"Div\";
+		$(scheduleDiv+' :input').attr('disabled', true);
 	}
 }
 ");
@@ -48,8 +39,6 @@ function checkBlkSchedule(date) {
 	'action'=>'index.php?r=groupReservation/confirm',
 	'enableAjaxValidation'=>true,
 )); ?>
-
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -64,22 +53,15 @@ function checkBlkSchedule(date) {
 		        'changeYear'=>'true',
 		        'changeMonth'=>'true',
 		        'beforeShowDay'=>'js:noWeekendsOrBlackoutDays',
-				'onSelect'=> 'js: function(dateText, inst) {'.
-				        CHtml::ajax(array('type'=>'POST','datatype'=>'html','url'=>array('checkBlkSch'), // ur controller action
-				                                'data'=>array('selDate'=>'js: dateText'),
-				                                'success'=>'function(html){
-				                                         var srvCombo ="'. CHtml::activeId($model, "schedule_id").'";
-				                                         $(srvCombo).html(html);
-				                                         return false; }',)
-				                        ).
-				        '}',
+				'onSelect'=> 'js:checkBlkSchedule',
 		        'showAnim'=>'fold',
 		    ),
 		)); ?>
     </fieldset>
-    
-    <fieldset class="actionForm">
+
+    <fieldset class="actionForm" id="scheduleForm">
       <legend>Select a Tour Schedule</legend>
+        <p class="instructions">Choose a tour time</p>
 		<?php
 		$schedules = $model->publicSchedules;
 		$prev_sche_id = 0;
@@ -97,11 +79,12 @@ function checkBlkSchedule(date) {
 				if ($event_option_flag) echo '</div>'."\n";
 				$event_option_flag = FALSE;
 				
-				echo '<div class="scheduleRadioGroup">'."\n";
+				echo '<div class="scheduleRadioGroup" id="schedule'.$schedule['schedule_id'].'Div">'."\n";
 				echo $form->radioButton($model, 'schedule_id', array(
 					'separator'=> '',
 					'value'=>$schedule['schedule_id'], 
 					'id' => 'schedule'.$schedule['schedule_id'],
+					'class' => 'scheduleRadio',
 					'uncheckValue'=>null,
 				));
 				echo '<label for="' . 'schedule'.$schedule['schedule_id'] . '">' . $schedule['schedule_name'] . '</label><br>'."\n";
@@ -158,6 +141,7 @@ function checkBlkSchedule(date) {
    
     <fieldset class="actionForm">
       <legend>Group Information</legend>
+        <p class="instructions">Tell us about your group</p>
 		<div class="row">
 			<?php echo $form->labelEx($model,'name'); ?>
 			<?php echo $form->textField($model,'name',array('size'=>30,'maxlength'=>255)); ?>
@@ -225,7 +209,14 @@ function checkBlkSchedule(date) {
     </fieldset>
 
     <fieldset class="actionForm">
-      <legend>Leader contact information</legend>
+      <legend>High School Information</legend>
+    	<p class="instructions">Which high school do you attend?</p>
+
+    </fieldset>
+
+    <fieldset class="actionForm">
+      <legend>Group contact information</legend>
+    	<p class="instructions">How can we contact you?</p>
 		<div class="row">
 			<?php echo $form->labelEx($model,'first_name'); ?>
 			<?php echo $form->textField($model,'first_name',array('size'=>30,'maxlength'=>255)); ?>

@@ -182,7 +182,32 @@ class GroupReservation extends CActiveRecord
 				FROM (SELECT s.id AS schedule_id, s.name AS schedule_name, es.id AS event_schedule_id, e.id AS event_id, e.name AS event_name, es.optional, es.start_time, es.end_time
 				FROM schedule s, event e, event_schedule es
 				WHERE s.id = es.schedule_id
-				AND e.id = es.event_id) AS t1
+				AND e.id = es.event_id
+				AND s.public = 1) AS t1
+				LEFT JOIN
+				(SELECT e.id AS event_id, eo.id AS option_id, eo.name AS option_name
+				FROM event e, event_option eo, event_option_event eoe
+				WHERE e.id = eoe.event_id
+				AND eoe.event_option_id = eo.id) AS t2
+				ON t1.event_id = t2.event_id
+				ORDER BY schedule_id, optional, start_time, option_id';
+		$command = Yii::app()->db->createCommand($sql);
+		$schedules = $command->queryAll();
+		// print_r($schedules);
+		return $schedules;
+	}
+	
+	/**
+	 * Search a detail schedule info to display in the confirm page 
+	 */
+	public function getSchedule($schedule_id) {
+		$sql = 'SELECT schedule_id, schedule_name, event_schedule_id, t1.event_id, event_name, optional, start_time, end_time, option_id, option_name
+				FROM (SELECT s.id AS schedule_id, s.name AS schedule_name, es.id AS event_schedule_id, e.id AS event_id, e.name AS event_name, es.optional, es.start_time, es.end_time
+				FROM schedule s, event e, event_schedule es
+				WHERE s.id = '.$schedule_id.'
+				AND s.id = es.schedule_id
+				AND e.id = es.event_id
+				AND s.public = 1) AS t1
 				LEFT JOIN
 				(SELECT e.id AS event_id, eo.id AS option_id, eo.name AS option_name
 				FROM event e, event_option eo, event_option_event eoe
@@ -203,6 +228,14 @@ class GroupReservation extends CActiveRecord
 	public function getEvent($id) {
 		$eventModel = Event::model() -> findByPk($id);
 		return $eventModel;
+	}
+	
+	/**
+	 * Find the name of the given type id
+	 */
+	public function getType($type_id) {
+		$type = GroupType::model() -> findByPk($type_id);
+		return $type->name;
 	}
 
 	/**

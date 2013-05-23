@@ -1,34 +1,51 @@
 fieldset {
-  padding: 1em;
+  padding: 0.5em 1em 1em 1em;
   margin-top: 1em;
-  width: 900px;
 }
 
 .row {
-  margin-top: 1em;
+  margin: 1em 0em;
 }
 
 
-#tour-schedule {
-  margin: auto;
+.instructions {
+  background-color: #d9d9d9;
+  padding: 0.5em;
+  font-weight: bold;
+  line-height: 1 !important;
 }
 
 .eventOptionList {
   margin-left: 1em;
 }
 
+.eventOptionList input[type="radio"] {
+  margin-left: 10px;
+}
+
 .scheduleRadioGroup {
   margin-bottom: 1em;
-  width: 31%;
-  float: left;
   padding: 5px;
+}
+
+
+.scheduleTimes {
+  margin-left: 2em;
+  width: 100%;
+  line-height: 2;
 }
 
 input#Schedule1, #Schedule2, #S1 {
   margin-left: 0em;
 }
 
+#date-information {
+  margin-bottom: 1.5em;
+}
 
+#group-information, #contact-information {
+  line-height: 2;
+}
 
 #group-information select, #group-information input[type='number'], #group-information input[type='text'] {
  display: block;
@@ -39,3 +56,42 @@ input#Schedule1, #Schedule2, #S1 {
 }
 
 #contact-information input {display: block;}
+
+#highschool-information select {display: block;}
+
+.sidebarlink {
+  display: block;
+  color: #e4c066;
+  background-color: #500000;
+  width: 300px;
+  line-height: 1;
+  text-align: center;
+  font-size: 140%;
+  margin-bottom: 1em;
+  padding-top: 1.75em;
+  padding-bottom: 0.75em;
+}
+
+.sidebarlink:hover {text-decoration: underline;}
+
+
+@media only screen and (min-width: 1024px) {
+  /* Style adjustments for viewports 1024px and over go here */
+
+
+.form {
+  width: 630px;
+  float: left;
+}
+
+fieldset {
+  width: 600px;
+}
+
+#sidebar {
+  margin-top: 1.5em;
+  margin-left: 670px;
+  
+}
+
+}

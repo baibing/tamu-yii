@@ -6,7 +6,11 @@
   <meta content="gbLDbh-Q1KfBG2HlZvIUsuGLsaHEXnO_kW30uedj-nU" name="google-site-verification"/>
   <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
          
-  <title>Visit Registration Form | Texas A&amp;M University, College Station, TX</title>
+  <link rel="stylesheet" type="text/css" href="/assets/56f08acc/jui/css/base/jquery-ui.css" />
+<script type="text/javascript" src="/assets/56f08acc/jquery.js"></script>
+<script type="text/javascript" src="/assets/56f08acc/jquery.yiiactiveform.js"></script>
+<script type="text/javascript" src="js/group_registration.js"></script>
+<title>Visit Registration Form | Texas A&amp;M University, College Station, TX</title>
   <meta content="Visit Registration Form| Texas A&amp;M University, College Station, TX" name="title"/>
   <meta content="Texas A&amp;M University - Marketing &amp; Communications" name="author"/>
   <meta content="texas a&amp;m university, texas, a&amp;m, texas a&amp;m, aggies, texas aggies, 
@@ -30,8 +34,8 @@
   <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/defaults.css" rel="stylesheet"/>
   <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/styles.css" rel="stylesheet"/>
          
-  <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-  <script>
+  <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>         
+    <script>
     var _gaq = _gaq || [];
         _gaq.push(
        ['_setAccount', 'UA-1617721-2'],
@@ -72,7 +76,6 @@
        
     </div> <!--end headerWrapper-->     
   </header>
-
   <article id="secondary">
     <nav class="nav-collapse" id="primaryNavigation" role="navigation">      
       <ul id="primaryNav">
@@ -87,6 +90,8 @@
 
     <h1 class="pageTitle">Campus Visit Registration</h1>
     <div id="container">
+      <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/headerImage.jpg" alt="Image of the Appelt Aggieland Visitor Center" />
+
       <div class="spacer"></div> 
       <div id="mainContent">
 
